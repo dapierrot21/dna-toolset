@@ -91,3 +91,24 @@ def generate_reading_frames(sequence):
     six_frames.append(translate_sequence(dna_reverse_complement(sequence), 1))
     six_frames.append(translate_sequence(dna_reverse_complement(sequence), 2))
     return six_frames
+
+
+# Compute all possible proteins in an aminoacid sequence and return a list of possible proteins.
+def proteins_from_reading_frames(aminoacid_sequence):
+    """Compute all possible proteins in an aminoacid sequence and return a list of possible proteins."""
+    current_protein = []
+    proteins = []
+    for aminoacid in aminoacid_sequence:
+        if aminoacid == "_":
+            # STOP accumulating amino acids if _ - STOP was found.
+            if current_protein:
+                for protein in current_protein:
+                    protein.append(protein)
+                current_protein = []
+        else:
+            # START accumulating amino acids if M - START was found.
+            if aminoacid == "M":
+                current_protein.append("")
+            for i in range(len(current_protein)):
+                current_protein[i] += aminoacid
+    return proteins
