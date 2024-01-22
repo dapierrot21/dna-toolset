@@ -103,7 +103,7 @@ def proteins_from_reading_frames(aminoacid_sequence):
             # STOP accumulating amino acids if _ - STOP was found.
             if current_protein:
                 for protein in current_protein:
-                    protein.append(protein)
+                    proteins.append(protein)
                 current_protein = []
         else:
             # START accumulating amino acids if M - START was found.
@@ -112,3 +112,26 @@ def proteins_from_reading_frames(aminoacid_sequence):
             for i in range(len(current_protein)):
                 current_protein[i] += aminoacid
     return proteins
+
+
+# Compute all possible proteins for all open reading frames.
+def all_proteins_from_other_reading_frames(
+    sequence, start_read_pos=0, end_read_pos=0, ordered=False
+):
+    """Compute all possible proteins for all open reading frames."""
+    # Protein Search DB: https://www.ncbi.nlm.nih.gov/nuccore/NM_001185097.2
+    # API can be used to pull protein info.
+    if end_read_pos > start_read_pos:
+        reading_frames = generate_reading_frames(sequence[start_read_pos:end_read_pos])
+    else:
+        reading_frames = generate_reading_frames(sequence)
+
+    results = []
+    for reading_frame in reading_frames:
+        proteins = proteins_from_reading_frames(reading_frame)
+        for protein in proteins:
+            results.append(protein)
+
+    if ordered:
+        return sorted(results, key=len, reverse=True)
+    return results

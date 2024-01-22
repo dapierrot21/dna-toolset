@@ -38,6 +38,10 @@ print(
 )
 print(f"[7] + Aminoacids Sequence from DNA: {translate_sequence(dnaString)}\n")
 print(f"[8] + Codon Frequency (L): {codon_usage(dnaString, 'L')}\n")
-print(f"[9] + Reading Frames:")
+print("[9] + Reading Frames:")
 for frame in generate_reading_frames(dnaString):
     print(frame)
+
+print("\n[10] + All proteins in 6 open reading frames:")
+for protein in all_proteins_from_other_reading_frames(dnaString, 0, 0, True):
+    print(f"{protein}")
