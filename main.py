@@ -49,11 +49,32 @@
 
 from bio_sequence import BioSequence
 
-test_dna_class = BioSequence("ATCGCTTCAT")
+test_dna_class = BioSequence()
+test_dna_class.generate_random_sequence(40, "DNA")
 
 print(test_dna_class.get_sequence_info())
-print(test_dna_class.get_sequence_biotype())
+# print(test_dna_class.get_sequence_biotype())
 
 
-test_dna_class.generate_random_sequence()
-print(test_dna_class.get_sequence_info())
+# test_dna_class.generate_random_sequence()
+# print(test_dna_class.get_sequence_info())
+print(test_dna_class.count_nucleotide_frequency())
+print(test_dna_class.transcription())
+# testing to make sure the original sequence did not change.
+# print(test_dna_class.dna_sequence)
+print(test_dna_class.dna_reverse_complement())
+print(test_dna_class.guanine_cytosine_content())
+print(test_dna_class.guanine_cytosine_content_subsequence(k=5))
+print(test_dna_class.translate_sequence())
+print(test_dna_class.codon_usage("P"))
+
+for rf in test_dna_class.generate_reading_frames():
+    print(rf)
+
+print(
+    test_dna_class.proteins_from_reading_frames(
+        ["N", "M", "L", "Y", "I", "R", "M", "R", "M", "T", "T", "H", "_"]
+    )
+)
+
+print(test_dna_class.all_proteins_from_other_reading_frames())
