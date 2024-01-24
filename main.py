@@ -51,4 +51,9 @@ from bio_sequence import BioSequence
 
 test_dna_class = BioSequence("ATCGCTTCAT")
 
-print(test_dna_class.show_sequence_info())
+print(test_dna_class.get_sequence_info())
+print(test_dna_class.get_sequence_biotype())
+
+
+test_dna_class.generate_random_sequence()
+print(test_dna_class.get_sequence_info())
