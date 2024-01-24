@@ -1,5 +1,6 @@
 from bio_structures import nucleotides
 from utilities import coloring_nucleotides
+import random
 
 
 class BioSequence:
@@ -10,17 +11,26 @@ class BioSequence:
         self.dna_sequence = dna_sequence.upper()
         self.label = label
         self.sequence_type = sequence_type
-        self.is_valid = self.validate_sequence()
-        assert (
-            self.is_valid
-        ), f"Provided data does not seem to be a correct {self.sequence_type} sequence."
+        self.is_valid = self.__validate_sequence()
 
-    # Checkig the sequence to make sure it is a DNA string.
+        if not self.is_valid:
+            raise ValueError(
+                f"Provided data does not seem to be a correct {self.sequence_type} sequence."
+            )
 
-    def validate_sequence(self):
+    def __validate_sequence(self):
         """Checkig the sequence to make sure it is a DNA string."""
         return set(nucleotides).issuperset(self.dna_sequence)
 
-    def show_sequence_info(self):
+    def get_sequence_biotype(self):
+        """Returns sequence type."""
+        return self.sequence_type
+
+    def get_sequence_info(self):
         """Returns Sequence Information"""
         return f"[Label]: {self.label}\n[Sequence]: {coloring_nucleotides(self.dna_sequence)}\n[Biotype]: {self.sequence_type}\n[Sequence Length]: {len(self.dna_sequence)}"
+
+    def generate_random_sequence(self, length=10, sequence_type="DNA"):
+        """Generate a random DNA sequence, provided the length"""
+        sequence = "".join(random.choice(nucleotides) for _ in range(length))
+        self.__init__(sequence, sequence_type, "Randomly generated sequence.")
